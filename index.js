@@ -309,7 +309,7 @@ module.exports = function(options, callback) {
 				return;
 			} */
 
-			client = new db.Connection(mssqlDsn);
+			client = new db.ConnectionPool(mssqlDsn);
 			options.database = options.database || mssqlDsn.database;
 			columns = sql.define({
 				name: 'columns',
