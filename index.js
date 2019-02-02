@@ -297,7 +297,7 @@ module.exports = function(options, callback) {
 			if (mssqlDsn.slice(-1) === ';') {
 				mssqlDsn = mssqlDsn.substring(0, mssqlDsn.length - 1);
 			}
-			try {
+			/* try {
 				mssqlDsn = JSON.parse("{\"" +
 					mssqlDsn.replace('mssql://', '')
 						.replace(/=/g, '\":\"')
@@ -307,7 +307,7 @@ module.exports = function(options, callback) {
 			} catch (e) {
 				callback(e);
 				return;
-			}
+			} */
 
 			client = new db.Connection(mssqlDsn);
 			options.database = options.database || mssqlDsn.database;
