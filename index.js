@@ -140,12 +140,16 @@ module.exports = function(options, callback) {
 
 		query = query.order(tables.name);
 
-		runQuery(query, function(err, rows) {
+		runQuery(query, function(err, results) {
 			if (err) {
 				callback(err);
 				return;
 			}
-			callback(null, rows.map(function(row) {
+			if (options.dialect === 'mssql') {
+				results = results.recordset;
+			  }
+
+			callback(null, results.map(function(row) {
 				// don't return excluded tables
 				if (options.excludeRegex &&
 					!options.excludeRegex.every(function(re) { return row.name.match(re) === null; })) {
@@ -192,7 +196,9 @@ module.exports = function(options, callback) {
 				callback(err);
 				return;
 			}
-
+			if(options.dialect === 'mssql') {
+				results = results.recordset;
+			}
 			results = results.map(function(col) {
 				switch (col.type) {
 					case 'character varying':
